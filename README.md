@@ -1,115 +1,126 @@
-Job Title Classifier for Google Sheets
+# Job Title Classifier for Google Sheets
+
 A powerful Google Apps Script tool that automatically standardizes, classifies, and analyzes job titles in Google Sheets, providing consistent seniority levels and functional categorization.
-Features
 
-Title Standardization
+## Features
 
-Removes special characters, regional indicators, and unnecessary text
-Normalizes common abbreviations (Sr → Senior, VP → Vice President, etc.)
-Validates and cleans input titles
+### Core Classification
+- **Title Standardization**
+  - Removes special characters, regional indicators, and unnecessary text
+  - Normalizes common abbreviations (Sr → Senior, VP → Vice President, etc.)
+  - Data validation and cleaning
 
+- **Seniority Classification (8 levels)**
+  1. Intern
+  2. Entry
+  3. IC (Individual Contributor)
+  4. Sr. IC
+  5. Lead/Manager
+  6. Director
+  7. VP
+  8. CXO
 
-Classification
+- **Function Categories**
+  - Engineering & Technology
+  - Product
+  - Sales
+  - HR
+  - Marketing
+  - Finance
+  - Operations
+  - Consulting
+  - Research
+  - Legal
+  - Education
+  - Healthcare
+  - Creative
+  - Executive
+  - Other
 
-Seniority Levels (8 levels from Intern to CXO)
-Function Categories (14 categories including Engineering, Sales, HR, etc.)
-Validation Status with data quality indicators
+### Visual Features
+- Color-coded seniority levels (blue scale)
+- Validation status highlighting
+- Data validation dropdowns
+- Clean formatting with headers and borders
 
+### Processing Capabilities
+- Process selected ranges
+- Bulk process multiple sheets
+- Error handling and logging
+- Input validation
+- Data quality indicators
 
-Visual Enhancements
+## Installation
 
-Color-coded seniority levels
-Validation status highlighting
-Clean formatting with headers and borders
+1. Create a new Google Sheet
+2. Go to `Extensions` > `Apps Script`
+3. Create two files:
+   - `core.gs`: Copy the core functions
+   - `processing.gs`: Copy the processing functions
+4. Save both files
+5. Refresh your Google Sheet
 
+## Usage
 
-Bulk Processing
+### Using the Menu
+After installation, you'll see a new menu item "Job Title Tools" with options:
+- **Process Selected Titles**: Process titles in selected range
+- **Bulk Process All Sheets**: Process all sheets in workbook
+- **Add Data Validation**: Add dropdown menus
+- **Apply Formatting**: Apply visual enhancements
+- **Reset Formatting**: Clear all formatting
 
-Process selected ranges or entire sheets
-Multi-sheet processing capability
-Error handling and logging
+### Processing Titles
+1. Input your job titles in Column A
+2. Select the range containing titles
+3. Use "Process Selected Titles" from the menu
+4. Review the results in:
+   - Column B: Standardized titles
+   - Column C: Seniority level
+   - Column D: Seniority text
+   - Column E: Function
+   - Column F: Validation status
 
+### Output Format
+```
+| Original Title | Standardized Title | Seniority Level | Seniority | Function | Validation Status |
+|---------------|-------------------|----------------|-----------|----------|------------------|
+| Sr Dev        | Senior Developer  | 4              | Sr. IC    | Engineering & Technology | Valid |
+```
 
+## Customization
 
-Installation
+### Modifying Classifications
+All configurations are in the `CONFIG` object in `core.gs`:
+```javascript
+const CONFIG = {
+  HEADERS: [...],
+  FUNCTIONS: [...],
+  SENIORITY_LEVELS: [...],
+  SENIORITY_COLORS: {...},
+  VALIDATION_COLORS: {...},
+  ABBREVIATIONS: {...}
+};
+```
 
-Open your Google Sheet
-Go to Extensions > Apps Script
-Replace all content in the script editor with the provided code
-Save the project
-Refresh your Google Sheet
+### Color Scheme
+Modify the color schemes in `CONFIG`:
+```javascript
+SENIORITY_COLORS: {
+  'Intern': '#E6F3FF',
+  'Entry': '#E1F5FE',
+  ...
+}
+```
 
-Usage
-Menu Options
-After installation, you'll see a new menu item "Job Title Tools" with the following options:
+## Limitations
+- Maximum 50,000 titles per batch (Google Sheets limit)
+- Processing time increases with dataset size
+- Some complex titles may require manual review
 
-Process Selected Titles: Analyze titles in the selected range
-Bulk Process All Sheets: Process all sheets in the workbook
-Add Data Validation: Add dropdown menus for manual corrections
-Apply Formatting: Apply visual formatting to the selected range
-Reset Formatting: Remove all formatting and start fresh
+## Error Handling
+- Invalid titles are flagged
+- Processing errors are logged
+- User feedback for bulk operations
+- Data validation prevents invalid entries
 
-Input Format
-
-Place job titles in Column A
-Select the range containing your titles
-Use the "Job Title Tools" menu to process them
-
-Output Columns
-
-Original Title: The input title
-Standardized Title: Cleaned and normalized version
-Seniority Level: Numerical level (1-8)
-Seniority: Text representation of seniority
-Function: Job function category
-Validation Status: Data quality indicator
-
-Classification Categories
-Seniority Levels
-
-Intern
-Entry
-IC (Individual Contributor)
-Sr. IC
-Lead/Manager
-Director
-VP
-CXO
-
-Function Categories
-
-Engineering & Technology
-Product
-Sales
-HR
-Marketing
-Finance
-Operations
-Consulting
-Research
-Legal
-Education
-Healthcare
-Creative
-Executive
-Other
-
-Customization
-The script uses a configuration object (CONFIG) at the top of the file where you can modify:
-
-Column headers
-Function categories
-Seniority levels
-Color schemes
-Abbreviation mappings
-
-Requirements
-
-Google Sheets
-Google Apps Script permissions
-
-Limitations
-
-Maximum 50,000 titles per batch (Google Sheets limit)
-Processing time increases with dataset size
-Some complex or unusual titles may require manual review
